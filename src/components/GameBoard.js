@@ -1,4 +1,4 @@
-import { HStack, VStack, Heading, Box, Image } from "@chakra-ui/react"
+import { Grid, VStack, Heading, Box, Image, GridItem } from "@chakra-ui/react"
 import Card from "./Card"
 
 const cards = [
@@ -45,23 +45,21 @@ const renderCard = (cardData) => {
         title= {cardData.title}
         imageSrc = {cardData.getImageSrc()}
         />
+
     )
 }
 
 const GameBoard = () =>{
     return(
         <div>
-        <VStack background="darkblue">
-            <Heading as="h1">
+        <VStack background="darkblue" minHeight="100vh" display="flex" > 
+            <Heading as="h1" color="white" height="8%">
                 Game Board
             </Heading>
-            <Box
-            displays="grid"
-            gridTemplateColumns="repeat(4,minmax(0,1fr)"
-            gridGap = {8}
-            >
+            <Grid templateColumns="repeat(4,1fr)" gap={3} height='92' >
                 {cards.map((card) => (renderCard(card)))}
-            </Box>
+                {cards.map((card) => (renderCard(card)))}
+            </Grid>
         </VStack>
         </div>
 
