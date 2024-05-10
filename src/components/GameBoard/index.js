@@ -30,14 +30,6 @@ const GameBoard = () =>{
         ShuffleCardIndexArray()
     }, [cardIndexArray, playableCards])
 
-    const SetUpGameBoard = () => {
-        setPlayableCards(importedCardArray)
-        console.log(playableCards)
-        UnpackCardIndexArray(8,2)
-        ShuffleCardIndexArray()
-        AddPlayableCardsToGameBoard()
-    }
-
     const UnpackCardIndexArray = (numOfCardGroups, numOfTimesRepeated) =>
         {
             let newCardIndexArray = []
