@@ -31,34 +31,27 @@ const GameBoard = () =>{
     }
     
     const setUpGameBoard = () =>{
-        unpackCardIndexArray(8,2)
-        shuffleCardIndexArray()
+
+        setCardIndexArray(shuffleCardIndexArray(duplicateCardArray(instantiateIndexArray(8), 2)))
     }
 
-    const unpackCardIndexArray = (numOfCardGroups, numOfTimesRepeated) =>
-        {
-            let newCardIndexArray = []
-            for(let i=1; i<= numOfTimesRepeated; i++){
-                newCardIndexArray.push.apply(newCardIndexArray,[...Array(numOfCardGroups).keys()])
-            }
-            setCardIndexArray(newCardIndexArray)
-        }
+    const instantiateIndexArray = (numOfCardGroups) => [...Array(numOfCardGroups).keys()]
+
+    const duplicateCardArray = (originalArray, numOfinstances) => [...Array(numOfinstances).keys()].flatMap(() => originalArray)
        
     
-    const shuffleCardIndexArray = () => {
+    const shuffleCardIndexArray = (inputCardIndexArray) => {
         
-        let newCardIndexArray = cardIndexArray;
+        let newCardIndexArray = inputCardIndexArray;
         
         for(let i= newCardIndexArray.length-1; i>0; i--){
             let randomIndex = Math.floor(Math.random() *i)
             let currentValue = newCardIndexArray[i]
             newCardIndexArray[i] = newCardIndexArray[randomIndex]
             newCardIndexArray[randomIndex] = currentValue
-        }
-        if(cardIndexArray.length>0){
-            setCardIndexArray(newCardIndexArray)
-            console.log(cardIndexArray)
-        }
+        } 
+        return newCardIndexArray
+
 
     }
 
