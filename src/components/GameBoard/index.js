@@ -1,8 +1,8 @@
 import { Grid, VStack, Heading } from "@chakra-ui/react"
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import CharacterCard from "../CharacterCard"
 import characters from "../../characters.json"
-import { useForceUpdate } from "framer-motion";
+
 
 const importedCardArray = characters;
 
@@ -20,26 +20,24 @@ const renderCard = (cardData, key) => {
 
 const GameBoard = () =>{
     const [playableCards, setPlayableCards] = useState(importedCardArray);
-    const [cardIndexArray, setCardIndexArray] = useState([])
-    const [state, updateState] = useState()
-
-    const forceUpdate = useCallback(() => updateState({}), [])
+    const [cardIndexArray, setCardIndexArray] = useState([]);
 
     function handleClick() {
         setUpGameBoard()
-        forceUpdate()
     }
     
     const setUpGameBoard = () =>{
 
-        setCardIndexArray(shuffleCardIndexArray(duplicateCardArray(instantiateIndexArray(8), 2)))
+        const newIndexArray = (instantiateIndexArray(8));
+        const modifiedIndexArray = shuffleCardIndexArray(duplicateCardArray(newIndexArray, 2))
+
+        setCardIndexArray(modifiedIndexArray);
     }
 
     const instantiateIndexArray = (numOfCardGroups) => [...Array(numOfCardGroups).keys()]
 
     const duplicateCardArray = (originalArray, numOfinstances) => [...Array(numOfinstances).keys()].flatMap(() => originalArray)
        
-    
     const shuffleCardIndexArray = (inputCardIndexArray) => {
         
         let newCardIndexArray = inputCardIndexArray;
@@ -49,7 +47,9 @@ const GameBoard = () =>{
             let currentValue = newCardIndexArray[i]
             newCardIndexArray[i] = newCardIndexArray[randomIndex]
             newCardIndexArray[randomIndex] = currentValue
-        } 
+        }
+        
+        
         return newCardIndexArray
 
 
