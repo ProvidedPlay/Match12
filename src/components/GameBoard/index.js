@@ -2,17 +2,20 @@ import { Grid, VStack, Heading } from "@chakra-ui/react"
 import { useState } from "react";
 import CharacterCard from "../CharacterCard"
 import characters from "../../characters.json"
+import cardBacks from "../../cardBacks.json"
 
 
 const importedCardArray = characters;
+const importedCardBackArray = cardBacks;
 
-const renderCard = (cardData, key) => {
+const renderCard = (cardData, key, cardBack) => {
 
     return(
         <CharacterCard
         key = {cardData.title + key}
         title= {cardData.title}
         imageSrc = {cardData.imageSrc}
+        cardBackImageSrc={cardBack.imageSrc}
         />
 
     )
@@ -21,12 +24,13 @@ const renderCard = (cardData, key) => {
 const GameBoard = () =>{
     const [playableCards, setPlayableCards] = useState(importedCardArray);
     const [cardIndexArray, setCardIndexArray] = useState([]);
+    const [currentCardBack, setCurrentCardBack] = useState(importedCardBackArray[3])
 
     function handleClick() {
-        setUpGameBoard()
+        setUpCardIndexArray()
     }
     
-    const setUpGameBoard = () =>{
+    const setUpCardIndexArray = () =>{
 
         const newIndexArray = (instantiateIndexArray(8));
         const modifiedIndexArray = shuffleCardIndexArray(duplicateCardArray(newIndexArray, 2))
@@ -40,24 +44,16 @@ const GameBoard = () =>{
        
     const shuffleCardIndexArray = (inputCardIndexArray) => {
         
-        let newCardIndexArray = inputCardIndexArray;
-        
-        for(let i= newCardIndexArray.length-1; i>0; i--){
-            let randomIndex = Math.floor(Math.random() *i)
-            let currentValue = newCardIndexArray[i]
-            newCardIndexArray[i] = newCardIndexArray[randomIndex]
-            newCardIndexArray[randomIndex] = currentValue
-        }
-        
-        
-        return newCardIndexArray
+        return inputCardIndexArray.map((inputCardIndex) => ({ sort: Math.random(), value: inputCardIndex}))
+            .sort((inputCardIndex, nextInputCardIndex) => inputCardIndex.sort - nextInputCardIndex.sort)
+            .map((inputCardIndex) => inputCardIndex.value)
 
 
     }
 
     const addPlayableCardsToGameBoard = () => {
         return(
-            cardIndexArray.map((index, key) => (renderCard(playableCards[index], key)))
+            cardIndexArray.map((index, key) => (renderCard(playableCards[index], key, currentCardBack)))
         )
     }
     
