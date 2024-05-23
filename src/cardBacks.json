@@ -1,21 +1,21 @@
 [
     {
-        "id": 1,
+        "id": 0,
         "title": "Empire",
         "imageSrc": "./images/Star Wars Card Back 1.jpg"
     },    
     {
-        "id": 2,
+        "id": 1,
         "title": "C3p0",
         "imageSrc": "./images/Star Wars Card Back 2.jpg"
     },    
     {
-        "id": 3,
+        "id": 2,
         "title": "Chewie",
         "imageSrc": "./images/Star Wars Card Back 3.png"
     },    
     {
-        "id": 4,
+        "id": 3,
         "title": "Jawa",
         "imageSrc": "./images/Star Wars Card Back 4.png"
     }

@@ -1,10 +1,11 @@
-import { Grid, VStack, Heading, useDisclosure, Button, Box, RadioGroup, HStack, Radio } from "@chakra-ui/react"
+import { Grid, VStack, Heading, useDisclosure, Button, Box, HStack} from "@chakra-ui/react"
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react"
-import { Menu, MenuButton, MenuList, MenuItem, MenuItemOption, MenuGroup, MenuOptionGroup, MenuDivider } from "@chakra-ui/react"
+import { Menu, MenuItemOption, MenuOptionGroup, } from "@chakra-ui/react"
 import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react"
 import { FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
 import "./style.js"
+import "./style.css"
 import CharacterCard from "../CharacterCard"
 import characters from "../../characters.json"
 import cardBacks from "../../cardBacks.json"
@@ -30,7 +31,7 @@ const renderCard = (cardData, key, cardBack) => {
 const GameBoard = () =>{
     const [playableCards, setPlayableCards] = useState(importedCardArray);
     const [cardIndexArray, setCardIndexArray] = useState([]);
-    const [currentCardBack, setCurrentCardBack] = useState(importedCardBackArray[3])
+    const [currentCardBack, setCurrentCardBack] = useState(importedCardBackArray[0])
     const [numOfCardTypes, setNumOfCardTypes] = useState(8)
     const [numOfCardCopies, setNumOfCardCopies] = useState(2)
     const { isOpen, onOpen, onClose, onToggle } = useDisclosure({defaultIsOpen: true});
@@ -76,13 +77,16 @@ const GameBoard = () =>{
         setUpCardIndexArray()
     }
 
+
     return(
-        <VStack background="darkblue"  > 
+        <VStack background="darkblue"> 
             <Heading as="h1" color="white" height="8%">
                 Star Wars Card Matcher
             </Heading>
-            <Button onClick = {handleResetGameClick} colorScheme="blue">Reset Game</Button>
-            <Button onClick = {onOpen} colorScheme="blue"> Game Settings </Button>
+            <HStack spacing="4vw" maxHeight="5vh">
+                <Button onClick = {handleResetGameClick} colorScheme="blue">Reset Game</Button>
+                <Button onClick = {onOpen} colorScheme="blue"> Game Settings </Button>
+            </HStack>
             <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay background="midnightblue"/>
                 <ModalContent background="navy">
@@ -100,15 +104,15 @@ const GameBoard = () =>{
                             <FormControl as="fieldset">
                                 <FormLabel as="legend">Card Background</FormLabel>
                                 <Menu>
-                                    <MenuOptionGroup defaultValue='0' type="radio" onChange={setCardBack}>
-                                        <MenuItemOption value="0">Imperial Black</MenuItemOption>
-                                        <MenuItemOption value="1">Jedi Blue</MenuItemOption>
-                                        <MenuItemOption value="2">Jedi Yellow</MenuItemOption>
-                                        <MenuItemOption value="3">Rebel Green</MenuItemOption>
+                                    <MenuOptionGroup defaultValue={currentCardBack.id.toString()} type="radio" onChange={setCardBack}>
+                                        <MenuItemOption className="menuOption" value="0">Imperial Black</MenuItemOption>
+                                        <MenuItemOption className="menuOption" value="1">Jedi Blue</MenuItemOption>
+                                        <MenuItemOption className="menuOption" value="2">Jedi Yellow</MenuItemOption>
+                                        <MenuItemOption className="menuOption" value="3">Rebel Green</MenuItemOption>
                                     </MenuOptionGroup>
                                 </Menu>
                                 <FormLabel as="legend" mt="8%"> Number of Card Types </FormLabel>
-                                <Slider aria-label="slider-ex-6" min={1} max={8} onChange={(numOfCardTypes) => setNumOfCardTypes(numOfCardTypes)} mt="5%">
+                                <Slider aria-label="slider-ex-6" min={1} max={8} onChange={(numOfCardTypes) => setNumOfCardTypes(numOfCardTypes)} mt="5%" defaultValue={numOfCardTypes.toString()}>
                                     <SliderMark value={1} {...labelStyles}>1</SliderMark>
                                     <SliderMark value={8} {...labelStyles}>8</SliderMark>
                                     <SliderMark
@@ -127,7 +131,7 @@ const GameBoard = () =>{
                                     <SliderThumb/>
                                 </Slider> 
                                 <FormLabel as="legend" mt="8%"> Number of Card Copies </FormLabel>
-                                <Slider aria-label="slider-ex-6" min={2} max={4} onChange={(numOfCardCopies) => setNumOfCardCopies(numOfCardCopies)} mt="5%" >
+                                <Slider aria-label="slider-ex-6" min={2} max={4} onChange={(numOfCardCopies) => setNumOfCardCopies(numOfCardCopies)} defaultValue={numOfCardCopies.toString()} mt="5%" >
                                     <SliderMark value={2} {...labelStyles}>2</SliderMark>
                                     <SliderMark value={4} {...labelStyles}>4</SliderMark>
                                     <SliderMark
@@ -145,7 +149,6 @@ const GameBoard = () =>{
                                     </SliderTrack>
                                     <SliderThumb/>
                                 </Slider>
-
                             </FormControl>
                         </Box>
                     </ModalBody>
@@ -158,7 +161,7 @@ const GameBoard = () =>{
 
 
             </Modal>
-            <Grid templateColumns="repeat(4,1fr)" gap={3} minHeight="100vh">
+            <Grid templateColumns="repeat(4,1fr)" gap={3} minHeight="89.6vh">
                 {addPlayableCardsToGameBoard()}
             </Grid>
         </VStack>
