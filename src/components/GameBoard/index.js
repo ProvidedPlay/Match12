@@ -6,6 +6,7 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
 import "./style.js"
 import "./style.css"
+import { useGameManagerContext } from "../../context/GameManagerProvider.js";
 import CharacterCard from "../CharacterCard"
 import characters from "../../characters.json"
 import cardBacks from "../../cardBacks.json"
@@ -15,7 +16,7 @@ import { labelStyles } from "./style.js";
 const importedCardArray = characters;
 const importedCardBackArray = cardBacks;
 
-const renderCard = (cardData, key, cardBack) => {
+const RenderCard = (cardData, key, cardBack) => {
 
     return(
         <CharacterCard
@@ -35,10 +36,18 @@ const GameBoard = () =>{
     const [numOfCardTypes, setNumOfCardTypes] = useState(8)
     const [numOfCardCopies, setNumOfCardCopies] = useState(2)
     const { isOpen, onOpen, onClose, onToggle } = useDisclosure({defaultIsOpen: true});
+    const {gameSettingsTestValue, setGameSettingsTestValue, gameSettingsSecondTestValue, setGameSettingsSecondTestValue} = useGameManagerContext()
 
     function handleResetGameClick() {
         setUpCardIndexArray()
+        setGameSettingsTestValue("tomato")
+        setGameSettingsSecondTestValue("plumpitys")
+        console.log(gameSettingsTestValue)
+        console.log(gameSettingsSecondTestValue)
+        
     }
+
+
     
     const setUpCardIndexArray = () =>{
 
@@ -63,7 +72,7 @@ const GameBoard = () =>{
 
     const addPlayableCardsToGameBoard = () => {
         return(
-            cardIndexArray.map((index, key) => (renderCard(playableCards[index], key, currentCardBack)))
+            cardIndexArray.map((index, key) => (RenderCard(playableCards[index], key, currentCardBack)))
         )
     }
 
