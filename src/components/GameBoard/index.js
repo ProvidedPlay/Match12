@@ -1,20 +1,10 @@
-import { Grid, VStack, Heading, useDisclosure, Button, Box, HStack} from "@chakra-ui/react"
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react"
-import { Menu, MenuItemOption, MenuOptionGroup, } from "@chakra-ui/react"
-import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react"
-import { FormControl, FormLabel } from "@chakra-ui/react";
-import { useState } from "react";
-import "./style.js"
-import "./style.css"
+import { Grid, VStack, Heading, Button, HStack} from "@chakra-ui/react";
 import { useGameManagerContext } from "../../context/GameManagerProvider.js";
-import CharacterCard from "../CharacterCard"
-import characters from "../../characters.json"
-import cardBacks from "../../cardBacks.json"
-import { labelStyles } from "./style.js";
+import useGameBoardRefresher from "../../hooks/useGameBoardRefresher";
+import CharacterCard from "../CharacterCard";
+import SettingsMenu from "../SettingsMenu";
+import "./style.css"
 
-
-const importedCardArray = characters;
-const importedCardBackArray = cardBacks;
 
 const RenderCard = (cardData, key, cardBack) => {
 
@@ -30,60 +20,20 @@ const RenderCard = (cardData, key, cardBack) => {
 }
 
 const GameBoard = () =>{
-    const [playableCards, setPlayableCards] = useState(importedCardArray);
-    const [cardIndexArray, setCardIndexArray] = useState([]);
-    const [currentCardBack, setCurrentCardBack] = useState(importedCardBackArray[0])
-    const [numOfCardTypes, setNumOfCardTypes] = useState(8)
-    const [numOfCardCopies, setNumOfCardCopies] = useState(2)
-    const { isOpen, onOpen, onClose, onToggle } = useDisclosure({defaultIsOpen: true});
-    const {gameSettingsTestValue, setGameSettingsTestValue, gameSettingsSecondTestValue, setGameSettingsSecondTestValue} = useGameManagerContext()
 
-    function handleResetGameClick() {
-        setUpCardIndexArray()
-        setGameSettingsTestValue("tomato")
-        setGameSettingsSecondTestValue("plumpitys")
-        console.log(gameSettingsTestValue)
-        console.log(gameSettingsSecondTestValue)
-        
-    }
+    const { setUpCardIndexArray } = useGameBoardRefresher();
+    const {
+        playableCards,
+        cardIndexArray,
+        currentCardBack,
+        onOpen //"Reset Game" button activates the Chakra UI custom hook 'useDisclosure' method
 
-
-    
-    const setUpCardIndexArray = () =>{
-
-        const newIndexArray = (instantiateIndexArray(numOfCardTypes));
-        const modifiedIndexArray = shuffleCardIndexArray(duplicateCardArray(newIndexArray, numOfCardCopies))
-
-        setCardIndexArray(modifiedIndexArray);
-    }
-
-    const instantiateIndexArray = (numOfCardGroups) => [...Array(numOfCardGroups).keys()]
-
-    const duplicateCardArray = (originalArray, numOfinstances) => [...Array(numOfinstances).keys()].flatMap(() => originalArray)
-       
-    const shuffleCardIndexArray = (inputCardIndexArray) => {
-        
-        return inputCardIndexArray.map((inputCardIndex) => ({ sort: Math.random(), value: inputCardIndex}))
-            .sort((inputCardIndex, nextInputCardIndex) => inputCardIndex.sort - nextInputCardIndex.sort)
-            .map((inputCardIndex) => inputCardIndex.value)
-
-
-    }
+    } = useGameManagerContext() //all of these are either state or state changers stored in my context component "GameManagerProvider"
 
     const addPlayableCardsToGameBoard = () => {
         return(
             cardIndexArray.map((index, key) => (RenderCard(playableCards[index], key, currentCardBack)))
         )
-    }
-
-    function setCardBack(cardBackNumber) {
-        setCurrentCardBack(importedCardBackArray[cardBackNumber])
-        console.log(cardBackNumber)
-    }
-    
-    function closeSettingsMenu(){
-        onClose()
-        setUpCardIndexArray()
     }
 
 
@@ -93,83 +43,10 @@ const GameBoard = () =>{
                 Star Wars Card Matcher
             </Heading>
             <HStack spacing="4vw" maxHeight="5vh">
-                <Button onClick = {handleResetGameClick} colorScheme="blue">Reset Game</Button>
+                <Button onClick = {setUpCardIndexArray} colorScheme="blue">Reset Game</Button>
                 <Button onClick = {onOpen} colorScheme="blue"> Game Settings </Button>
             </HStack>
-            <Modal isOpen={isOpen} onClose={onClose} >
-                <ModalOverlay background="midnightblue"/>
-                <ModalContent background="navy">
-                    <ModalHeader color="white">Game Settings</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody p="5%">
-                        <Box
-                            background = "darkblue"
-                            color="white"
-                            rounded = "md"
-                            shadow = "xl"
-                            border="solid navy"
-                            p= "40px"
-                        >
-                            <FormControl as="fieldset">
-                                <FormLabel as="legend">Card Background</FormLabel>
-                                <Menu>
-                                    <MenuOptionGroup defaultValue={currentCardBack.id.toString()} type="radio" onChange={setCardBack}>
-                                        <MenuItemOption className="menuOption" value="0">Imperial Black</MenuItemOption>
-                                        <MenuItemOption className="menuOption" value="1">Jedi Blue</MenuItemOption>
-                                        <MenuItemOption className="menuOption" value="2">Jedi Yellow</MenuItemOption>
-                                        <MenuItemOption className="menuOption" value="3">Rebel Green</MenuItemOption>
-                                    </MenuOptionGroup>
-                                </Menu>
-                                <FormLabel as="legend" mt="8%"> Number of Card Types </FormLabel>
-                                <Slider aria-label="slider-ex-6" min={1} max={8} onChange={(numOfCardTypes) => setNumOfCardTypes(numOfCardTypes)} mt="5%" defaultValue={numOfCardTypes.toString()}>
-                                    <SliderMark value={1} {...labelStyles}>1</SliderMark>
-                                    <SliderMark value={8} {...labelStyles}>8</SliderMark>
-                                    <SliderMark
-                                        value={numOfCardTypes}
-                                        textAlign='center'
-                                        color='white'
-                                        mt="-10"
-                                        ml="-5"
-                                        w="12"
-                                    >
-                                        {numOfCardTypes}
-                                    </SliderMark>
-                                    <SliderTrack>
-                                        <SliderFilledTrack />
-                                    </SliderTrack>
-                                    <SliderThumb/>
-                                </Slider> 
-                                <FormLabel as="legend" mt="8%"> Number of Card Copies </FormLabel>
-                                <Slider aria-label="slider-ex-6" min={2} max={4} onChange={(numOfCardCopies) => setNumOfCardCopies(numOfCardCopies)} defaultValue={numOfCardCopies.toString()} mt="5%" >
-                                    <SliderMark value={2} {...labelStyles}>2</SliderMark>
-                                    <SliderMark value={4} {...labelStyles}>4</SliderMark>
-                                    <SliderMark
-                                        value={numOfCardCopies}
-                                        textAlign='center'
-                                        color='white'
-                                        mt="-10"
-                                        ml="-5"
-                                        w="12"
-                                    >
-                                        {numOfCardCopies}
-                                    </SliderMark>
-                                    <SliderTrack>
-                                        <SliderFilledTrack />
-                                    </SliderTrack>
-                                    <SliderThumb/>
-                                </Slider>
-                            </FormControl>
-                        </Box>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={closeSettingsMenu}>
-                            Save and Start Game
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-
-
-            </Modal>
+            <SettingsMenu></SettingsMenu>
             <Grid templateColumns="repeat(4,1fr)" gap={3} minHeight="89.6vh">
                 {addPlayableCardsToGameBoard()}
             </Grid>
