@@ -21,6 +21,11 @@ const GameManagerProvider = ({children}) => {
     const [updatedNumOfCardCopies, setUpdatedNumOfCardCopies] = useState(numOfCardCopies)
     const [updatedCardBackNumber, setUpdatedCardBackNumber] = useState(0)
 
+    const [revealedCards, setRevealedCards] = useState([])
+    const [gameBoardCardArray, setGameBoardCardArray] = useState([])
+
+    const[gameRunning, setGameRunning] = useState(false)
+
     const context = useMemo(() => ({
         playableCards, setPlayableCards,
         cardIndexArray, setCardIndexArray,
@@ -32,7 +37,10 @@ const GameManagerProvider = ({children}) => {
         updatedNumOfCardTypes, setUpdatedNumOfCardTypes,
         updatedNumOfCardCopies, setUpdatedNumOfCardCopies,
         updatedCardBackNumber, setUpdatedCardBackNumber,
-    }), [cardIndexArray, isOpen, numOfCardCopies, numOfCardTypes, currentCardBack])
+        revealedCards, setRevealedCards,
+        gameRunning, setGameRunning,
+        gameBoardCardArray, setGameBoardCardArray
+    }), [cardIndexArray, isOpen, numOfCardCopies, numOfCardTypes, currentCardBack, revealedCards, gameBoardCardArray, gameRunning])
 
     return (
         <GameManagerContext.Provider value={context}> {children} </GameManagerContext.Provider>

@@ -6,35 +6,18 @@ import SettingsMenu from "../SettingsMenu";
 import "./style.css"
 
 
-const RenderCard = (cardData, key, cardBack) => {
 
-    return(
-        <CharacterCard
-        key = {cardData.title + key}
-        title= {cardData.title}
-        imageSrc = {cardData.imageSrc}
-        cardBackImageSrc={cardBack.imageSrc}
-        />
-
-    )
-}
 
 const GameBoard = () =>{
 
-    const { setUpCardIndexArray } = useGameBoardRefresher();
+    const { startGame } = useGameBoardRefresher();
     const {
-        playableCards,
-        cardIndexArray,
-        currentCardBack,
+        
+        gameBoardCardArray,
         onOpen //"Reset Game" button activates the Chakra UI custom hook 'useDisclosure' method
 
     } = useGameManagerContext() //all of these are either state or state changers stored in my context component "GameManagerProvider"
 
-    const addPlayableCardsToGameBoard = () => {
-        return(
-            cardIndexArray.map((index, key) => (RenderCard(playableCards[index], key, currentCardBack)))
-        )
-    }
 
 
     return(
@@ -43,12 +26,12 @@ const GameBoard = () =>{
                 Star Wars Card Matcher
             </Heading>
             <HStack spacing="4vw" maxHeight="5vh">
-                <Button onClick = {setUpCardIndexArray} colorScheme="blue">Reset Game</Button>
+                <Button onClick = {startGame} colorScheme="blue">Reset Game</Button>
                 <Button onClick = {onOpen} colorScheme="blue"> Game Settings </Button>
             </HStack>
             <SettingsMenu></SettingsMenu>
             <Grid templateColumns="repeat(4,1fr)" gap={3} minHeight="89.6vh">
-                {addPlayableCardsToGameBoard()}
+                {gameBoardCardArray.map((gameBoardCardProps) => <CharacterCard {...gameBoardCardProps}/>)}
             </Grid>
         </VStack>
 

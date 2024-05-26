@@ -18,20 +18,21 @@ const SettingsMenu = () => {
         numOfCardCopies, setNumOfCardCopies,
         cardBackArray,
         isOpen, onClose,
+        setGameRunning,
         //updatedNumOfCardTypes, setUpdatedNumOfCardTypes,
         //updatedNumOfCardCopies, setUpdatedNumOfCardCopies,
         //updatedCardBackNumber, setUpdatedCardBackNumber,
 
     } = useGameManagerContext()
 
-    const { setUpCardIndexArray } = useGameBoardRefresher()
+    const { startGame } = useGameBoardRefresher()
     //const { applySettings } = useApplySettings()
 
     
-    function closeSettingsMenu(){
+    function closeSettingsMenuAndStartGame(){
         onClose()
         //applySettings()
-        setUpCardIndexArray()
+        startGame()
     }
 
     function setCardBack(cardBackNumber) {
@@ -106,7 +107,7 @@ const SettingsMenu = () => {
                         </Box>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={closeSettingsMenu}>
+                        <Button colorScheme="blue" mr={3} onClick={closeSettingsMenuAndStartGame}>
                             Save and Start Game
                         </Button>
                     </ModalFooter>
