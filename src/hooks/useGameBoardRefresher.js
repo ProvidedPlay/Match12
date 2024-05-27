@@ -12,11 +12,15 @@ function useGameBoardRefresher() {
         setGameBoardCardArray,
         currentCardBack,
         setGameRunning,
+        setLivesRemaining,
+        setCardGroupsRemaining,
     
     } = useGameManagerContext()
 
     const startGame = () =>{
         setGameRunning(true)
+        setLivesRemaining(numOfCardTypes)
+        setCardGroupsRemaining(numOfCardTypes)
         setUpCardIndexArray()
     }
 
@@ -48,7 +52,7 @@ function useGameBoardRefresher() {
         const newGameBoardCardArray = []
         cardIndexArray.map((index, key) => (newGameBoardCardArray.push(AddCardToGameBoardCardArray(playableCards[index], key, currentCardBack))))
         setGameBoardCardArray(newGameBoardCardArray)
-        console.log(newGameBoardCardArray)
+        //console.log(newGameBoardCardArray)
     }
 
     function AddCardToGameBoardCardArray(cardData, key, cardBack) {

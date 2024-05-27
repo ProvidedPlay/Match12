@@ -16,15 +16,20 @@ const GameManagerProvider = ({children}) => {
     const [numOfCardCopies, setNumOfCardCopies] = useState(2)
     const [cardBackArray, setCardBackArray] = useState(importedCardBackArray)
     const { isOpen, onOpen, onClose, onToggle } = useDisclosure({defaultIsOpen: true});
+    const { isOpen: gameOverScreenIsOpen, onOpen: onGameOverScreenOpen, onClose: onGameOverScreenClose, onToggle: onGameOverScreenToggle } = useDisclosure({defaultIsOpen: false});
 
     const [updatedNumOfCardTypes, setUpdatedNumOfCardTypes] = useState(numOfCardTypes)
     const [updatedNumOfCardCopies, setUpdatedNumOfCardCopies] = useState(numOfCardCopies)
     const [updatedCardBackNumber, setUpdatedCardBackNumber] = useState(0)
 
-    const [revealedCards, setRevealedCards] = useState([])
+    const [activeCards, setActiveCards] = useState([])
     const [gameBoardCardArray, setGameBoardCardArray] = useState([])
 
     const[gameRunning, setGameRunning] = useState(false)
+    const[livesRemaining, setLivesRemaining] = useState(8)
+    const[cardGroupsRemaining, setCardGroupsRemaining] = useState(8)
+
+    const[gameWon, setGameWon] = useState(false)
 
     const context = useMemo(() => ({
         playableCards, setPlayableCards,
@@ -34,13 +39,17 @@ const GameManagerProvider = ({children}) => {
         numOfCardCopies, setNumOfCardCopies,
         cardBackArray, setCardBackArray,
         isOpen, onOpen, onClose, onToggle,
+        gameOverScreenIsOpen, onGameOverScreenOpen, onGameOverScreenClose, onGameOverScreenToggle,
         updatedNumOfCardTypes, setUpdatedNumOfCardTypes,
         updatedNumOfCardCopies, setUpdatedNumOfCardCopies,
         updatedCardBackNumber, setUpdatedCardBackNumber,
-        revealedCards, setRevealedCards,
+        activeCards, setActiveCards,
         gameRunning, setGameRunning,
-        gameBoardCardArray, setGameBoardCardArray
-    }), [cardIndexArray, isOpen, numOfCardCopies, numOfCardTypes, currentCardBack, revealedCards, gameBoardCardArray, gameRunning])
+        gameBoardCardArray, setGameBoardCardArray,
+        livesRemaining, setLivesRemaining,
+        cardGroupsRemaining, setCardGroupsRemaining,
+        gameWon, setGameWon,
+    }), [cardIndexArray, isOpen, numOfCardCopies, numOfCardTypes, currentCardBack, activeCards, gameBoardCardArray, gameRunning, livesRemaining, cardGroupsRemaining, gameWon])
 
     return (
         <GameManagerContext.Provider value={context}> {children} </GameManagerContext.Provider>
