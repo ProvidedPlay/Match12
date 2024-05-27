@@ -1,4 +1,4 @@
-import {Image, GridItem, ScaleFade, useDisclosure} from "@chakra-ui/react";
+import {Image, GridItem, Box, ScaleFade, useDisclosure} from "@chakra-ui/react";
 import React, { useState, useRef, useEffect } from "react";
 
 import { useGameManagerContext } from "../../context/GameManagerProvider";
@@ -40,29 +40,19 @@ const Card = ({gameBoardLocationIndex, title, imageSrc, cardBackImageSrc, cardRe
     return(
         <ScaleFade in={isOpen} initialScale={.95} transition={{ exit: {duration: 0.2} }}>
             <GridItem 
-            id="characterCard" height="20vh" minHeight="5em" minWidth="5em" width="20vh" rounded="xl" borderColor="black" backgroundColor="black" p="5%" shadow="Dark lg" aspectRatio="1/1" 
+            id="characterCard"
             _hover={!cardRevealed? {cursor: "pointer", transform: "scale(1.03)", transitionProperty: "transform", transitionDuration: ".08s", transitionTimingFunction: "ease-in-out"} : {}}
             >
-                <div className="container">
-                <div
-                    className={`flip-card ${
-                        cardRevealed ? "flipped" : ""
-                    }`}
-                >
-                    <div className="flip-card-inner">
-                        <div className="flip-card-front">
-                            <div className="card-content">
-                                <Image src={cardBackImageSrc} alt="Card Image" height="100%" rounded="xl" onClick={attemptToRevealCard} />
-                            </div>
-                        </div>
-                        <div className="flip-card-back">
-                            <div className="card-content">
-                                <Image src={imageSrc} alt="Card Image" height="100%" rounded="xl" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <Box className={`flip-card ${cardRevealed ? "flipped" : ""}`} height="20vh" minHeight="5em" minWidth="5em" width="20vh" rounded="xl" borderColor="black" backgroundColor="black" p="5%" shadow="Dark lg" aspectRatio="1/1">
+                    <Box className="flip-card-inner">
+                        <Box className="flip-card-front">
+                            <Box><Image src={cardBackImageSrc} alt="Card Image" height="100%" width="100%" rounded="xl" onClick={attemptToRevealCard} /></Box>
+                        </Box>
+                        <Box className="flip-card-back">
+                            <Box><Image src={imageSrc} alt="Card Image" height="100%" width="100%" rounded="xl" /></Box>
+                        </Box>
+                    </Box>
+                </Box>
             </GridItem>
         </ScaleFade>
     )
