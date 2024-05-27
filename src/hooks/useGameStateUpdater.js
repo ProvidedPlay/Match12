@@ -72,6 +72,7 @@ const useGameStateUpdater = () => {
             console.log("round lost, lives remaining:" + currentLivesRemaining)
         }
         if(roundWon){
+            removeRevealedCards(currentCard)
             currentCardGroupsRemaining -= 1
             console.log("round won, card groups remaining:" + currentCardGroupsRemaining)
         }
@@ -103,6 +104,13 @@ const useGameStateUpdater = () => {
             revealedCard.card.cardRevealed = false
             //console.log("cardsReset" + revealedCard.card.key)
 
+        })
+    }
+
+    const removeRevealedCards = (currentCard) =>{
+        currentCard.cardSolved = true
+        activeCards.forEach((revealedCard) => {
+            revealedCard.card.cardSolved = true
         })
     }
 

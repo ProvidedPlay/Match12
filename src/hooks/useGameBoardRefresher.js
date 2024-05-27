@@ -19,7 +19,7 @@ function useGameBoardRefresher() {
 
     const startGame = () =>{
         setGameRunning(true)
-        setLivesRemaining(numOfCardTypes)
+        setLivesRemaining(numOfCardTypes * (numOfCardCopies-1))
         setCardGroupsRemaining(numOfCardTypes)
         setUpCardIndexArray()
     }
@@ -66,6 +66,7 @@ function useGameBoardRefresher() {
             cardBackImageSrc: cardBack.imageSrc,
             cardRevealed: false,
             currentImage: cardBack.imageSrc,
+            cardSolved: false,
             }
 
 

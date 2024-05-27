@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useGameManagerContext } from "../../context/GameManagerProvider";
 import  useGameStateUpdater  from "../../hooks/useGameStateUpdater"
 
-const Card = ({gameBoardLocationIndex, title, imageSrc, cardBackImageSrc, cardRevealed, currentImage}) => {
+const Card = ({gameBoardLocationIndex, title, imageSrc, cardBackImageSrc, cardRevealed, currentImage, cardSolved}) => {
     // Display the name and title on the card component when flipped
     const {
         gameRunning,
@@ -14,6 +14,7 @@ const Card = ({gameBoardLocationIndex, title, imageSrc, cardBackImageSrc, cardRe
     const {processCardFlip} = useGameStateUpdater()
 
     currentImage = cardRevealed ? imageSrc : cardBackImageSrc;
+    const currentOpacity = cardSolved ? "0%" : "100%"
     const currentCard = gameBoardCardArray[gameBoardLocationIndex]
 
     const attemptToRevealCard = () => {
@@ -24,9 +25,8 @@ const Card = ({gameBoardLocationIndex, title, imageSrc, cardBackImageSrc, cardRe
     }
 
     return(
-        <GridItem height="20vh" minHeight="5em" minWidth="5em" width="20vh" rounded="xl" borderColor="black" backgroundColor="black" p="5%" shadow="Dark lg" aspectRatio="1/1">
+        <GridItem id="characterCard" height="20vh" minHeight="5em" minWidth="5em" width="20vh" rounded="xl" borderColor="black" backgroundColor="black" p="5%" shadow="Dark lg" aspectRatio="1/1" opacity={currentOpacity}>
             <Image src={currentImage} alt="Card Image" height="100%" rounded="xl" onClick={attemptToRevealCard}/>
-            <p>{gameBoardLocationIndex}</p>
         </GridItem>
     )
 }
