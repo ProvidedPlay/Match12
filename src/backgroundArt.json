@@ -1,0 +1,17 @@
+[
+    {
+        "id": 0,
+        "title": "EAWBackground1",
+        "imageSrc": "./images/newGameMenuArtModified.jpg"
+    },
+    {
+        "id": 1,
+        "title": "EAWBackground2",
+        "imageSrc": "./images/EmpireStormsHothAltered.jpg"
+    },
+    {
+        "id": 2,
+        "title": "EAWBackground3",
+        "imageSrc": "./images/EmpireStormsTatooineAltered.jpg"
+    }
+]

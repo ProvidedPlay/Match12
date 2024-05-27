@@ -1,0 +1,42 @@
+.menuOption:hover {
+    background-color: black;
+}
+
+.menuOption:focus {
+    background-color: black;
+}
+ 
+.flip-card {
+    width: auto;
+    height: auto;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s;
+}
+ 
+.flip-card.flipped {
+    transform: rotateY(180deg);
+}
+ 
+.flip-card-inner {
+    width: auto;
+    height: auto;
+    transform-style: preserve-3d;
+}
+ 
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    backface-visibility: hidden;
+}
+ 
+.flip-card-front {
+    background-color: black;
+    color: black;
+}
+ 
+.flip-card-back {
+    background-color: black;
+    color: black;
+    transform: rotateY(180deg);
+}
