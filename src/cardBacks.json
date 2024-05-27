@@ -1,22 +1,22 @@
 [
     {
         "id": 0,
-        "title": "Empire",
+        "title": "Imperial Black",
         "imageSrc": "./images/Star Wars Card Back 1.jpg"
     },    
     {
         "id": 1,
-        "title": "C3p0",
+        "title": "Jedi Blue",
         "imageSrc": "./images/Star Wars Card Back 2.jpg"
     },    
     {
         "id": 2,
-        "title": "Chewie",
+        "title": "Jedi Yellow",
         "imageSrc": "./images/Star Wars Card Back 3.png"
     },    
     {
         "id": 3,
-        "title": "Jawa",
+        "title": "Rebel Green",
         "imageSrc": "./images/Star Wars Card Back 4.png"
     }
 ]

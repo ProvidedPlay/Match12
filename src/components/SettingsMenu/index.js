@@ -18,7 +18,8 @@ const SettingsMenu = () => {
         numOfCardCopies, setNumOfCardCopies,
         cardBackArray,
         isOpen, onClose,
-        setGameRunning,
+        backgroundArt, setBackgroundArt,
+        backgroundArtArray,
         //updatedNumOfCardTypes, setUpdatedNumOfCardTypes,
         //updatedNumOfCardCopies, setUpdatedNumOfCardCopies,
         //updatedCardBackNumber, setUpdatedCardBackNumber,
@@ -27,7 +28,6 @@ const SettingsMenu = () => {
 
     const { startGame } = useGameBoardRefresher()
     //const { applySettings } = useApplySettings()
-
     
     function closeSettingsMenuAndStartGame(){
         onClose()
@@ -40,31 +40,43 @@ const SettingsMenu = () => {
         console.log(cardBackNumber)
     }
 
+    function setBackground(backgroundNumber) {
+        setBackgroundArt(backgroundArtArray[backgroundNumber])
+    }
+
     return(
-        <Modal isOpen={isOpen} onClose={onClose} >
-                <ModalOverlay/>
-                <ModalContent background="midnightBlue">
-                    <ModalHeader color="white">Game Settings</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody p="5%">
+        <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+                <ModalOverlay backgroundImage={backgroundArt.imageSrc} backgroundSize="100vw 100vh"/>
+                <ModalContent background="midnightBlue" border="solid black" borderWidth=".4vw">
+                <ModalHeader textAlign="center" fontSize="x-large" color="white">Concentration: Star Wars Edition</ModalHeader>
+                    <ModalBody pt="4%">
                         <Box
                             background = "darkblue"
                             color="white"
                             rounded = "md"
                             shadow = "xl"
-                            border="solid navy"
+                            border="solid black"
+                            borderWidth=".3vw"
                             p= "40px"
                         >
                             <FormControl as="fieldset">
                                 <FormLabel as="legend">Card Background</FormLabel>
                                 <Menu>
-                                    <MenuOptionGroup defaultValue={currentCardBack.id.toString()} type="radio" onChange={setCardBack}>
-                                        <MenuItemOption className="menuOption" value="0">Imperial Black</MenuItemOption>
-                                        <MenuItemOption className="menuOption" value="1">Jedi Blue</MenuItemOption>
-                                        <MenuItemOption className="menuOption" value="2">Jedi Yellow</MenuItemOption>
-                                        <MenuItemOption className="menuOption" value="3">Rebel Green</MenuItemOption>
+                                    <MenuOptionGroup defaultValue={backgroundArt.id.toString()} type="radio" onChange={setBackground}>
+                                        <MenuItemOption className="menuOption" value="0">The Empire Storms Endor</MenuItemOption>
+                                        <MenuItemOption className="menuOption" value="1">The Empire Storms Hoth</MenuItemOption>
+                                        <MenuItemOption className="menuOption" value="2">The Empire Storms Tatooine</MenuItemOption>
                                     </MenuOptionGroup>
                                 </Menu>
+                                <FormLabel as="legend">Game Background</FormLabel>
+                                    <Menu>
+                                        <MenuOptionGroup defaultValue={currentCardBack.id.toString()} type="radio" onChange={setCardBack}>
+                                            <MenuItemOption className="menuOption" value="0">Imperial Black</MenuItemOption>
+                                            <MenuItemOption className="menuOption" value="1">Jedi Blue</MenuItemOption>
+                                            <MenuItemOption className="menuOption" value="2">Jedi Yellow</MenuItemOption>
+                                            <MenuItemOption className="menuOption" value="3">Rebel Green</MenuItemOption>
+                                        </MenuOptionGroup>
+                                    </Menu>
                                 <FormLabel as="legend" mt="8%"> Number of Card Types </FormLabel>
                                 <Slider aria-label="slider-ex-6" min={1} max={8} onChange={(numOfCardTypes) => setNumOfCardTypes(numOfCardTypes)} mt="5%" defaultValue={numOfCardTypes.toString()}>
                                     <SliderMark id="sliderMark" value={1}>1</SliderMark>

@@ -23,18 +23,17 @@ const GameOverScreen = () => {
     const gameOverMessage = gameWon? "Congratulations! You Won!" : "So close... Try again."
 
     return(
-        <Modal isOpen={gameOverScreenIsOpen} onClose={onGameOverScreenClose} >
+        <Modal isOpen={gameOverScreenIsOpen} onClose={onGameOverScreenClose} closeOnOverlayClick={false}>
                 <ModalOverlay/>
-                <ModalContent background="midnightBlue">
-                    <ModalHeader color="white">Game Settings</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody p="5%">
+                <ModalContent background="midnightBlue" border="solid black" borderWidth=".4vw">
+                    <ModalBody pt="13%">
                         <Box
                             background = "darkblue"
                             color="white"
                             rounded = "md"
                             shadow = "xl"
-                            border="solid navy"
+                            border="solid black"
+                            borderWidth=".3vw"
                             p= "40px"
                         >
                             <Heading>{gameOverMessage}</Heading>

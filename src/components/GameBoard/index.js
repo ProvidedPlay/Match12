@@ -14,6 +14,7 @@ const GameBoard = () =>{
     const { startGame } = useGameBoardRefresher();
     const {
         
+        backgroundArt,
         gameBoardCardArray,
         livesRemaining,
         onOpen //"Reset Game" button activates the Chakra UI custom hook 'useDisclosure' method
@@ -23,14 +24,14 @@ const GameBoard = () =>{
 
 
     return(
-        <VStack background="darkblue"> 
+        <VStack backgroundImage={backgroundArt.imageSrc} backgroundSize="100vw 100vh" backgroundColor="midnightblue"> 
             <Heading as="h1" color="white" height="8%">
-                Star Wars Card Matcher
+                Concentration: Star Wars Edition
             </Heading>
             <HStack spacing="3vw" maxHeight="5vh">
                 <Button onClick = {startGame} colorScheme="blue">Reset Game</Button>
                 <Heading as="h3" size="lg" color="white">Lives Remaining: {livesRemaining}</Heading>
-                <Button onClick = {onOpen} colorScheme="blue"> Game Settings </Button>
+                <Button onClick = {onOpen} colorScheme="blue"> Quit To Main Menu </Button>
             </HStack>
             <SettingsMenu></SettingsMenu>
             <GameOverScreen></GameOverScreen>
