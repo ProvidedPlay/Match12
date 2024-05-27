@@ -36,7 +36,7 @@ const GameBoard = () =>{
             <SettingsMenu></SettingsMenu>
             <GameOverScreen></GameOverScreen>
             <Grid templateColumns="repeat(4,1fr)" gap={3} minHeight="89.6vh">
-                {gameBoardCardArray.map((gameBoardCardProps) => <CharacterCard {...gameBoardCardProps}/>)}
+                {gameBoardCardArray.map((gameBoardCardProps) => <CharacterCard className="characterCard" {...gameBoardCardProps}/>)}
             </Grid>
         </VStack>
 
