@@ -22,10 +22,6 @@ const GameManagerProvider = ({children}) => {
     const { isOpen, onOpen, onClose, onToggle } = useDisclosure({defaultIsOpen: true});
     const { isOpen: gameOverScreenIsOpen, onOpen: onGameOverScreenOpen, onClose: onGameOverScreenClose, onToggle: onGameOverScreenToggle } = useDisclosure({defaultIsOpen: false});
 
-    const [updatedNumOfCardTypes, setUpdatedNumOfCardTypes] = useState(numOfCardTypes)
-    const [updatedNumOfCardCopies, setUpdatedNumOfCardCopies] = useState(numOfCardCopies)
-    const [updatedCardBackNumber, setUpdatedCardBackNumber] = useState(0)
-
     const [activeCards, setActiveCards] = useState([])
     const [gameBoardCardArray, setGameBoardCardArray] = useState([])
 
@@ -46,9 +42,6 @@ const GameManagerProvider = ({children}) => {
         cardBackArray, setCardBackArray,
         isOpen, onOpen, onClose, onToggle,
         gameOverScreenIsOpen, onGameOverScreenOpen, onGameOverScreenClose, onGameOverScreenToggle,
-        updatedNumOfCardTypes, setUpdatedNumOfCardTypes,
-        updatedNumOfCardCopies, setUpdatedNumOfCardCopies,
-        updatedCardBackNumber, setUpdatedCardBackNumber,
         activeCards, setActiveCards,
         gameRunning, setGameRunning,
         gameBoardCardArray, setGameBoardCardArray,

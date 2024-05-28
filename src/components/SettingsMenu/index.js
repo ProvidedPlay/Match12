@@ -7,7 +7,6 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 
 import { useGameManagerContext } from "../../context/GameManagerProvider";
 import useGameBoardRefresher from "../../hooks/useGameBoardRefresher";
-import useApplySettings from "../../hooks/useApplySettings";
 
 const SettingsMenu = () => {
 
@@ -20,9 +19,6 @@ const SettingsMenu = () => {
         isOpen, onClose,
         backgroundArt, setBackgroundArt,
         backgroundArtArray,
-        //updatedNumOfCardTypes, setUpdatedNumOfCardTypes,
-        //updatedNumOfCardCopies, setUpdatedNumOfCardCopies,
-        //updatedCardBackNumber, setUpdatedCardBackNumber,
 
     } = useGameManagerContext()
 
@@ -60,7 +56,7 @@ const SettingsMenu = () => {
                             p= "40px"
                         >
                             <FormControl as="fieldset">
-                                <FormLabel as="legend">Card Background</FormLabel>
+                                <FormLabel as="legend">Game Background</FormLabel>
                                 <Menu>
                                     <MenuOptionGroup defaultValue={backgroundArt.id.toString()} type="radio" onChange={setBackground}>
                                         <MenuItemOption className="menuOption" value="0">The Empire Storms Endor</MenuItemOption>
@@ -68,7 +64,7 @@ const SettingsMenu = () => {
                                         <MenuItemOption className="menuOption" value="2">The Empire Storms Tatooine</MenuItemOption>
                                     </MenuOptionGroup>
                                 </Menu>
-                                <FormLabel as="legend">Game Background</FormLabel>
+                                <FormLabel as="legend">Card Background</FormLabel>
                                     <Menu>
                                         <MenuOptionGroup defaultValue={currentCardBack.id.toString()} type="radio" onChange={setCardBack}>
                                             <MenuItemOption className="menuOption" value="0">Imperial Black</MenuItemOption>

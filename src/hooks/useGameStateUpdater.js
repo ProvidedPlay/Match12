@@ -12,16 +12,17 @@ const useGameStateUpdater = () => {
         cardGroupsRemaining, setCardGroupsRemaining,
         setGameWon,
         onGameOverScreenOpen,
+        gameBoardCardArray,
     } = useGameManagerContext()
 
 
-    const processCardFlip = async(currentCard) => {
-        
+    const processCardFlip = async(currentCardIndex) => {
+        const currentCard = gameBoardCardArray[currentCardIndex]
 
         
         //console.log(currentCard.gameBoardLocationIndex)
         setGameRunning(false)
-        revealCard(currentCard)
+        await revealCard(currentCard)
         //checkAgainstRevealedCards(currentCard)
 
     }
@@ -33,31 +34,32 @@ const useGameStateUpdater = () => {
         setActiveCards(newRevealedCards)
         //console.log("current card added to revealed cards" + activeCards.length)
 
-        checkAgainstRevealedCards(currentCard)
+        await checkAgainstRevealedCards(currentCard)
     }
 
-    const checkAgainstRevealedCards = (currentCard) => {
+    const checkAgainstRevealedCards = async(currentCard) => {
         if(activeCards.length===0 || activeCards[0].card.title === currentCard.title){
             if(activeCards.length < numOfCardCopies -1){
                 //continue round
-                continueRound()
+                await continueRound()
                 //console.log("roundContinues"+activeCards.length + currentCard.key)
                 return null
             }
             else{
                 //end round winner
-                endRound(true, currentCard)
+                await endRound(true, currentCard)
                 return null
             }
         }
         else{
             //end round loser
-            endRound(false, currentCard)
+            await endRound(false, currentCard)
             return null
         }
     }
 
-    const continueRound = () =>{
+    const continueRound = /*async*/() =>{
+        //await delay(300)
         setGameRunning(true)
     }
 
