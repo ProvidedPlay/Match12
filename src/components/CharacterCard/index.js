@@ -1,26 +1,22 @@
 import {Image, GridItem, Box, ScaleFade, useDisclosure} from "@chakra-ui/react";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { useGameManagerContext } from "../../context/GameManagerProvider";
 import  useGameStateUpdater  from "../../hooks/useGameStateUpdater"
 
-const Card = ({gameBoardLocationIndex, title, imageSrc, cardBackImageSrc, cardRevealed, currentImage, cardSolved}) => {
+const Card = ({gameBoardLocationIndex, imageSrc, cardBackImageSrc, cardRevealed, currentImage, cardSolved}) => {
     // Display the name and title on the card component when flipped
     const {
         gameRunning,
-        gameBoardCardArray,
     } = useGameManagerContext();
 
     const {processCardFlip} = useGameStateUpdater()
     const { isOpen, onOpen, onClose } = useDisclosure({defaultIsOpen:true})
 
-    //currentImage = cardRevealed ? imageSrc : cardBackImageSrc;
-    const currentCard = gameBoardCardArray[gameBoardLocationIndex]
-
     const attemptToRevealCard = () => {
 
         if (!cardRevealed && gameRunning){
-            processCardFlip(currentCard)
+            processCardFlip(gameBoardLocationIndex)
         }
     }
 
