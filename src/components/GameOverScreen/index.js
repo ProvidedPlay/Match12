@@ -41,7 +41,7 @@ const GameOverScreen = () => {
                     </ModalBody>
                     <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={closeAndStartNewGame}>
-                            Start New Games
+                            Start New Game
                         </Button>
                     </ModalFooter>
                 </ModalContent>
