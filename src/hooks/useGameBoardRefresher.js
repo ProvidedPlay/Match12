@@ -14,10 +14,12 @@ function useGameBoardRefresher() {
         setGameRunning,
         setLivesRemaining,
         setCardGroupsRemaining,
+        setActiveCards
     
     } = useGameManagerContext()
 
     const startGame = () =>{
+        setActiveCards([])
         setGameRunning(true)
         setLivesRemaining(numOfCardTypes * (numOfCardCopies-1))
         setCardGroupsRemaining(numOfCardTypes)

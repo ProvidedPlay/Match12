@@ -34,49 +34,50 @@ const useGameStateUpdater = () => {
         setActiveCards(newRevealedCards)
         //console.log("current card added to revealed cards" + activeCards.length)
 
-        await checkAgainstRevealedCards(currentCard)
+        await checkAgainstRevealedCards(currentCard, newRevealedCards)
     }
 
-    const checkAgainstRevealedCards = async(currentCard) => {
-        if(activeCards.length===0 || activeCards[0].card.title === currentCard.title){
-            if(activeCards.length < numOfCardCopies -1){
+    const checkAgainstRevealedCards = async(currentCard, revealedCards) => {
+        console.log("current card:" + currentCard.key + "new revealed cards: " + revealedCards )
+        if(revealedCards[0].card.title === currentCard.title){//in the case of one card in the array (first card clicked), the 0th index card would be the current card so their names would match and the round continues
+            if(revealedCards.length < numOfCardCopies){
                 //continue round
                 await continueRound()
-                //console.log("roundContinues"+activeCards.length + currentCard.key)
+                //console.log("roundContinues"+newRevealedCards.length + currentCard.key)
                 return null
             }
             else{
                 //end round winner
-                await endRound(true, currentCard)
+                await endRound(true, revealedCards)
                 return null
             }
         }
         else{
             //end round loser
-            await endRound(false, currentCard)
+            await endRound(false, revealedCards)
             return null
         }
     }
 
-    const continueRound = /*async*/() =>{
-        //await delay(300)
+    const continueRound = async() =>{
+        await delay(50)
         setGameRunning(true)
     }
 
-    const endRound = async(roundWon, currentCard) =>{
+    const endRound = async(roundWon, revealedCards) =>{
         let currentLivesRemaining = livesRemaining
         let currentCardGroupsRemaining = cardGroupsRemaining
         await delay(1000)
 
         if(!roundWon){
-            resetRevealedCards(currentCard)
+            resetRevealedCards(revealedCards)
             currentLivesRemaining -= 1
-            console.log("round lost, lives remaining:" + currentLivesRemaining)
+            //console.log("round lost, lives remaining:" + currentLivesRemaining)
         }
         if(roundWon){
-            removeRevealedCards(currentCard)
+            removeRevealedCards(revealedCards)
             currentCardGroupsRemaining -= 1
-            console.log("round won, card groups remaining:" + currentCardGroupsRemaining)
+            //console.log("round won, card groups remaining:" + currentCardGroupsRemaining)
         }
 
         setActiveCards([])
@@ -85,11 +86,11 @@ const useGameStateUpdater = () => {
         setCardGroupsRemaining(currentCardGroupsRemaining)
         
         if(currentLivesRemaining <= 0){
-            endGame(false)
+            triggerGameOver(false)
             return null
         }
         if(currentCardGroupsRemaining<=0){
-            endGame(true)
+            triggerGameOver(true)
             return null
         }
 
@@ -99,29 +100,29 @@ const useGameStateUpdater = () => {
         //console.log(roundWon? "winner" : "loser " + currentCard.key)
     }
 
-    const resetRevealedCards = (currentCard) =>{
-        currentCard.cardRevealed = false
+    const resetRevealedCards = (revealedCards) =>{
+        //currentCard.cardRevealed = false
         //console.log("resetCards"+activeCards.length)
-        activeCards.forEach((revealedCard) => {
+        revealedCards.forEach((revealedCard) => {
             revealedCard.card.cardRevealed = false
             //console.log("cardsReset" + revealedCard.card.key)
 
         })
     }
 
-    const removeRevealedCards = (currentCard) =>{
-        currentCard.cardSolved = true
-        activeCards.forEach((revealedCard) => {
+    const removeRevealedCards = (revealedCards) =>{
+        //currentCard.cardSolved = true
+        revealedCards.forEach((revealedCard) => {
             revealedCard.card.cardSolved = true
         })
     }
 
-    const endGame = (gameWon) =>
+    const triggerGameOver = (gameWon) =>
     {
         setGameRunning(false)
         setGameWon(gameWon)
         onGameOverScreenOpen()
-        console.log(gameWon? "you win" : "you lose")
+        //console.log(gameWon? "you win" : "you lose")
     }
 
     return(
