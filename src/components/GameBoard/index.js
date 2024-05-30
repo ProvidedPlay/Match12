@@ -29,9 +29,9 @@ const GameBoard = () =>{
                 Concentration: Star Wars Edition
             </Heading>
             <HStack spacing="3vw" height="5vh" p={{base: "1vh", lg: "none"}}>
-                <Button onClick = {startGame} colorScheme="blue">Reset Game</Button>
-                <Heading as="h3" size="lg" color="white">Lives Remaining: {livesRemaining}</Heading>
-                <Button onClick = {onOpen} colorScheme="blue"> Quit To Main Menu </Button>
+                <Button size={{base: "sm", md: "md"}} onClick = {startGame} colorScheme="blue">Reset Game</Button>
+                <Heading as="h3" size={{base:"md", md: "lg"}} color="white">Lives Remaining: {livesRemaining}</Heading>
+                <Button size={{base: "sm", md: "md"}} onClick = {onOpen} colorScheme="blue"> Quit To Main Menu </Button>
             </HStack>
             <SettingsMenu></SettingsMenu>
             <GameOverScreen></GameOverScreen>
