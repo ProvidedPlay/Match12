@@ -39,7 +39,7 @@ const Card = ({gameBoardLocationIndex, imageSrc, cardBackImageSrc, cardRevealed,
             id="characterCard"
             _hover={!cardRevealed? {cursor: "pointer", transform: "scale(1.03)", transitionProperty: "transform", transitionDuration: ".08s", transitionTimingFunction: "ease-in-out"} : {}}
             >
-                <Box className={`flip-card ${cardRevealed ? "flipped" : ""}`} height="20vh" minHeight="5em" minWidth="5em" width="20vh" rounded="xl" borderColor="black" backgroundColor="black" p="5%" shadow="Dark lg" aspectRatio="1/1">
+                <Box className={`flip-card ${cardRevealed ? "flipped" : ""}`} height={{base: "30vw", lg: "20vh"}} width={{base: "30vw", lg: "20vh"}} minHeight="5em" minWidth="5em" rounded="xl" borderColor="black" backgroundColor="black" p="5%" shadow="Dark lg" aspectRatio="1/1">
                     <Box className="flip-card-inner">
                         <Box className="flip-card-front">
                             <Box><Image src={cardBackImageSrc} alt="Card Image" height="100%" width="100%" rounded="xl" onClick={attemptToRevealCard} /></Box>
