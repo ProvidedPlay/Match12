@@ -42,7 +42,7 @@ const SettingsMenu = () => {
 
     return(
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
-                <ModalOverlay backgroundImage={backgroundArt.imageSrc} backgroundSize="100vw 100vh"/>
+                <ModalOverlay backgroundImage={backgroundArt.imageSrc} backgroundSize={["cover","cover", "cover", "100vw 100vh"]}/>
                 <ModalContent background="midnightBlue" border="solid black" borderWidth=".4vw">
                 <ModalHeader textAlign="center" fontSize="x-large" color="white">Concentration: Star Wars Edition</ModalHeader>
                     <ModalBody pt="4%">

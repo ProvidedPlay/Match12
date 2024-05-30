@@ -24,7 +24,7 @@ const GameBoard = () =>{
 
 
     return(
-        <VStack backgroundImage={backgroundArt.imageSrc} backgroundSize="100vw 100vh" backgroundColor="midnightblue"> 
+        <VStack backgroundImage={backgroundArt.imageSrc} backgroundSize={["cover","cover", "cover", "100vw 100vh"]} backgroundColor="midnightblue" backgroundRepeat="no-repeat" backgroundPosition="top" backgroundAttachment="fixed" minHeight="100vh" > 
             <Heading as="h1" color="white" height="8%">
                 Concentration: Star Wars Edition
             </Heading>
@@ -35,7 +35,7 @@ const GameBoard = () =>{
             </HStack>
             <SettingsMenu></SettingsMenu>
             <GameOverScreen></GameOverScreen>
-            <Grid templateColumns="repeat(4,1fr)" gap={3} minHeight="89.6vh">
+            <Grid templateColumns={["repeat(3,1fr)","repeat(3,1fr)","repeat(3,1fr)", "repeat(4,1fr)" ]} gap={3} minHeight="89.6vh">
                 {gameBoardCardArray.map((gameBoardCardProps) => <CharacterCard className="characterCard" {...gameBoardCardProps}/>)}
             </Grid>
         </VStack>
